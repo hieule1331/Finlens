@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS stocks (
     exchange VARCHAR(10) NOT NULL CHECK (exchange IN ('HOSE', 'HNX', 'UPCOM')),
     industry VARCHAR(100),
     sector VARCHAR(100),
+    layer VARCHAR(20) CHECK (layer IN ('BLUECHIP', 'MIDCAP', 'PENNY')),
     listing_date DATE,
     outstanding_shares BIGINT,
     market_cap DECIMAL(20, 2),
@@ -31,6 +32,9 @@ CREATE INDEX IF NOT EXISTS idx_stocks_industry ON stocks(industry);
 
 -- Index for faster queries by sector
 CREATE INDEX IF NOT EXISTS idx_stocks_sector ON stocks(sector);
+
+-- Index for faster queries by layer
+CREATE INDEX IF NOT EXISTS idx_stocks_layer ON stocks(layer);
 
 -- ========================================
 -- STOCK_PRICES TABLE
@@ -90,6 +94,7 @@ COMMENT ON TABLE stock_prices IS 'Stores historical daily price data for stocks'
 
 COMMENT ON COLUMN stocks.symbol IS 'Stock ticker symbol (e.g., VNM, VIC, FPT)';
 COMMENT ON COLUMN stocks.exchange IS 'Stock exchange: HOSE, HNX, or UPCOM';
+COMMENT ON COLUMN stocks.layer IS 'Stock layer/category: BLUECHIP, MIDCAP, or PENNY';
 COMMENT ON COLUMN stocks.outstanding_shares IS 'Number of outstanding shares';
 COMMENT ON COLUMN stocks.market_cap IS 'Market capitalization in VND';
 

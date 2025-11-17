@@ -39,10 +39,10 @@ async function insertStocks(stocks: Stock[]): Promise<void> {
       await client.query(
         `
         INSERT INTO stocks (
-          symbol, name, exchange, industry, sector,
+          symbol, name, exchange, industry, sector, layer,
           listing_date, outstanding_shares, market_cap
         )
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
         ON CONFLICT (symbol) DO NOTHING
       `,
         [
@@ -51,6 +51,7 @@ async function insertStocks(stocks: Stock[]): Promise<void> {
           stock.exchange,
           stock.industry,
           stock.sector,
+          stock.layer,
           stock.listing_date,
           stock.outstanding_shares,
           stock.market_cap,
