@@ -1,6 +1,7 @@
 import express, { Request, Response, Application } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import marketRoutes from './routes/market.routes';
 
 // Load environment variables
 dotenv.config();
@@ -12,6 +13,9 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// API Routes
+app.use('/api/v1/market', marketRoutes);
 
 // Health check endpoint
 app.get('/health', (_req: Request, res: Response) => {
@@ -31,6 +35,11 @@ app.get('/', (_req: Request, res: Response) => {
     version: '1.0.0',
     endpoints: {
       health: '/health',
+      market: {
+        latest: '/api/v1/market/latest',
+        history: '/api/v1/market/history/:symbol',
+        summary: '/api/v1/market/summary',
+      },
     },
   });
 });
