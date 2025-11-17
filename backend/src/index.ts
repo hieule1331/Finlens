@@ -2,6 +2,7 @@ import express, { Request, Response, Application } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import marketRoutes from './routes/market.routes';
+import calculationRoutes from './routes/calculation.routes';
 
 // Load environment variables
 dotenv.config();
@@ -16,6 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // API Routes
 app.use('/api/v1/market', marketRoutes);
+app.use('/api/v1/calculation', calculationRoutes);
 
 // Health check endpoint
 app.get('/health', (_req: Request, res: Response) => {
@@ -39,6 +41,10 @@ app.get('/', (_req: Request, res: Response) => {
         latest: '/api/v1/market/latest',
         history: '/api/v1/market/history/:symbol',
         summary: '/api/v1/market/summary',
+      },
+      calculation: {
+        layerStrength: '/api/v1/calculation/layer/:layer',
+        sectorStrength: '/api/v1/calculation/sector/:sector',
       },
     },
   });

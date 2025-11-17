@@ -9,6 +9,7 @@ export interface Stock {
   exchange: 'HOSE' | 'HNX' | 'UPCOM';
   industry: string;
   sector: string;
+  layer: 'BLUECHIP' | 'MIDCAP' | 'PENNY';
   listing_date: Date;
   outstanding_shares: number;
   market_cap: number;
@@ -453,6 +454,7 @@ export function generateSampleStocks(): Stock[] {
       exchange: stock.exchange,
       industry: SECTORS[stock.sector as keyof typeof SECTORS],
       sector: stock.sector,
+      layer: stock.type as 'BLUECHIP' | 'MIDCAP' | 'PENNY',
       listing_date: generateListingDate(),
       outstanding_shares: generateOutstandingShares(marketCap),
       market_cap: marketCap,
